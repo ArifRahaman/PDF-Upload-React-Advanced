@@ -289,28 +289,35 @@ import Signup from "./components/Signup";
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';  // Import the Dashboard component
 import NotFound from './components/NotFound';
+import Home from "./components/Home"
+import Room from "./components//Room"
 import { useAuthContext } from '../Context/AuthContext';
 
 function App() {
   const { authUser } = useAuthContext();
 
   return (
-    <div>
+    <div className="flex h-screen">
       <Navbar />
-      <Routes>
-        <Route path="/" element={authUser ? <Navigate to="/speech" /> : <Navigate to="/login" />} />
-        <Route path="/dashboard" element={authUser ? <Dashboard /> : <Navigate to="/login" />} /> {/* New Dashboard route */}
-        <Route path="/speech" element={authUser ? <Speech /> : <Navigate to="/login" />} />
-        <Route path="/upload" element={authUser ? <Uploadpdf /> : <Navigate to="/login" />} />
-        <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup />} />
-        <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
 
-        <Route path="*" element={<NotFound />} />
+      <div className="flex-grow p-4 overflow-y-auto">
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={authUser ? <Navigate to="/speech" /> : <Navigate to="/login" />} />
+          <Route path="/dashboard" element={authUser ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/speech" element={authUser ? <Speech /> : <Navigate to="/login" />} />
+          <Route path="/upload" element={authUser ? <Uploadpdf /> : <Navigate to="/login" />} />
+          <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup />} />
+          <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
+          <Route path="/room/:roomId" element={<Room />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
 
-      </Routes>
       <ToastContainer />
     </div>
   );
 }
 
 export default App;
+

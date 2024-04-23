@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const generateAuthTokenandsetCookie = require("../utils/generateToken");
+const connectToUserDatabase=require("../connectToUserDatabase")
 const signup = async (req, res) => {
   try {
     const { username, email, dob, universityname, password, cpassword } =

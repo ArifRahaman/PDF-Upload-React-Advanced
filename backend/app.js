@@ -3,13 +3,22 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const multer = require("multer");
+const path = require("path");
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const userController = require("./Controllers/authUser");
 // Load environment variables
 require("dotenv").config();
 const User = require('./models/User'); // Import the User model
 // Middleware
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 app.use("/files", express.static("files"));
 
 // MongoDB connection
@@ -24,6 +33,9 @@ mongoose
   .catch((e) => {
     console.error("MongoDB connection error:", e.message);
   });
+
+
+  
 app.post("/signup", userController.signup);
 app.post("/login", userController.login);
 
@@ -59,6 +71,38 @@ app.put("/user/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server errororrrrrr" });
   }
 });
+
+const fileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads"); // Save uploaded files to the 'uploads' folder
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    ); // Generate unique filenames
+  },
+});
+
+// Multer upload instance
+const fileUpload = multer({ storage: fileStorage });
+
+app.post(
+  "/upload-profile-image",
+  fileUpload.single("profileImage"),
+  (req, res) => {
+    // Access uploaded file via req.file
+    if (!req.file) {
+      return res.status(400).send("No file uploaded.");
+    }
+    // You can process the uploaded file here, such as saving its path to a database
+    const filePath = req.file.path;
+    const imageUrl = `http://localhost:8000/${filePath}`; // Modify this to match your server setup
+
+    // Send a JSON response with the image URL
+    res.json({ imageUrl });
+  }
+);
 
 // app.get("/about", authenticate, (req, res) => {
 //   console.log("hello world this is about page");
@@ -105,7 +149,10 @@ app.get("/get-files", async (req, res) => {
     res.status(500).json({ status: "error", message: error.message });
   }
 });
-
+app.get("/home", (req, res) => {
+  // You can perform database operations or other tasks here
+  res.json({ message: "Welcome to the backend!" });
+});
 app.get("/", async (req, res) => {
   res.send("Success!!!!!!");
 });// Update PDF title
@@ -114,11 +161,16 @@ app.put('/update-title/:id', async (req, res) => {
     const { id } = req.params;
     const { title } = req.body;
 
-    const updatedPdf = await PdfSchema.findByIdAndUpdate(
+    // const updatedPdf = await PdfSchema.findByIdAndUpdate(
+    //   id,
+    //   { title },
+    //   { new: true }
+    // );
+    const updatedPdf=await PdfSchema.findByIdAndUpdate(
       id,
-      { title },
-      { new: true }
-    );
+      {title},
+      {new: true}
+    )
 
     if (!updatedPdf) {
       return res.status(404).json({ status: 'error', message: 'PDF not found' });

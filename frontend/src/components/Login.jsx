@@ -77,6 +77,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useLogin from "../../hooks/useLogin";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -92,7 +93,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-200">
+        <div className="flex items-center justify-center min-h-screen bg-gray-200">
             <div className="w-full max-w-md p-6 rounded-lg shadow-md bg-gray-100">
                 <h1 className="text-3xl font-semibold text-center text-gray-800">
                     Login<span className="text-blue-600"> Arif</span>
@@ -107,7 +108,7 @@ const Login = () => {
                             type="email"
                             id="email"
                             placeholder="Enter email"
-                            className="w-full px-3 py-2 border rounded-md focus:outline-green-500 "
+                            className="w-full px-3 py-2 border rounded-md focus:outline-green-500"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -121,7 +122,7 @@ const Login = () => {
                             type="password"
                             id="password"
                             placeholder="Enter Password"
-                            className="w-full px-3 py-2 border rounded-md focus:outline-green-500 "
+                            className="w-full px-3 py-2 border rounded-md focus:outline-green-500"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -133,7 +134,7 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        className="w-full mt-4 bg-green-600  text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
+                        className="w-full mt-4 bg-green-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none"
                         disabled={loading}
                     >
                         {loading ? <span className="spinner"></span> : "Login"}
