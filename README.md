@@ -20,7 +20,7 @@ https://github.com/ArifRahaman/Upload-PDF-Read-Delete.git
 
 
 
-**Next enter the data into the .env file.**
+**Next e data into the .env file.**
 
 Now run the backend server.
 

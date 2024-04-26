@@ -93,7 +93,7 @@ const login = async (req, res) => {
     const isCorrectPass = await bcrypt.compare(password, user.password);
 
     if (!isCorrectPass) {
-      return res.status(400).json({ error: "Invalid password" });
+      return res.status(400).json({ error: "Wrong password" });
     }
 
     // Generate authentication token and set cookie

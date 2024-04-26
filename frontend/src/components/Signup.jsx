@@ -38,9 +38,9 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         const result = await signup(inputs);
-        if (!result) {
+        if (result) {
             // toast.success("Signup successful!");
-            navigate("/");
+            navigate("/login");
         }
     };
 

@@ -291,6 +291,7 @@ import Dashboard from './components/Dashboard';  // Import the Dashboard compone
 import NotFound from './components/NotFound';
 import Home from "./components/Home"
 import Room from "./components//Room"
+import Chatbot from "./components/chatbot"
 import { useAuthContext } from '../Context/AuthContext';
 
 function App() {
@@ -309,6 +310,7 @@ function App() {
           <Route path="/upload" element={authUser ? <Uploadpdf /> : <Navigate to="/login" />} />
           <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup />} />
           <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
+          <Route path="/chatbot" element={<Chatbot/>} />
           <Route path="/room/:roomId" element={<Room />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -319,5 +321,5 @@ function App() {
   );
 }
 
-export default App;
 
+export default App;

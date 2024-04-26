@@ -58,14 +58,15 @@
 
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../Context/AuthContext';
 import Cookies from 'js-cookie';
-import { FaBars, FaTimes, FaSignOutAlt } from 'react-icons/fa'; // Import the icons
+import { FaBars, FaTimes, FaSignOutAlt, FaMicrophone, FaUpload, FaRobot, FaVideo, FaChartLine, FaUserPlus, FaSignInAlt } from 'react-icons/fa';
 
 const Navbar = () => {
     const { authUser, setAuthUser } = useAuthContext();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [sidebarVisible, setSidebarVisible] = useState(true);
 
@@ -82,58 +83,85 @@ const Navbar = () => {
         setSidebarVisible(!sidebarVisible);
     };
 
+    const isActive = (path) => {
+        return location.pathname === path;
+    };
+
+    const isVideoConference = location.pathname === '/home';
+    const isRoom = location.pathname.startsWith('/room/');
+
     return (
-        <div className="flex">
-            {/* Sidebar */}
-            <nav className={`bg-gray-800 text-white w-64 p-4 ${sidebarVisible ? '' : 'hidden'}`}>
-                <ul className="space-y-4 flex flex-col h-full">
-                    <li>
-                        <Link to="/speech" className="hover:bg-gray-700 px-3 py-2 rounded block">Speech</Link>
-                    </li>
-                    <li>
-                        <Link to="/upload" className="hover:bg-gray-700 px-3 py-2 rounded block">Upload</Link>
-                    </li>
-                    {authUser ? (
-                        <>
-                            <li>
-                                <Link to="/home" className="hover:bg-gray-700 px-3 py-2 rounded block">VideoConference</Link>
-                            </li>
-                            <li>
-                                <Link to="/dashboard" className="hover:bg-gray-700 px-3 py-2 rounded block">Dashboard</Link>
-                            </li>
-                        </>
-                    ) : (
-                        <>
-                            <li>
-                                <Link to="/signup" className="hover:bg-gray-700 px-3 py-2 rounded block">Signup</Link>
-                            </li>
-                            <li>
-                                <Link to="/login" className="hover:bg-gray-700 px-3 py-2 rounded block">Login</Link>
-                            </li>
-                        </>
-                    )}
-                    <li className=""> {/* Move the logout button to the bottom */}
-                        <button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded block">
-                            <FaSignOutAlt className="mr-2 " /> Logout
-                        </button>
-                    </li>
-                </ul>
-            </nav>
-
-            {/* Icon Button to Toggle Sidebar */}
-            <button onClick={toggleSidebar} className="bg-gray-800 text-white px-2 py-1 rounded ml-4">
-                {sidebarVisible ? <FaTimes style={{ fontSize: '1rem' }} /> : <FaBars style={{ fontSize: '1rem' }} />}
-            </button>
-
-            {/* Page Content */}
-            <div className="flex-grow p-4">
-                {/* Content Goes Here */}
+        <header className={`bg-gray-800 text-white ${isVideoConference || isRoom ? 'hidden' : ''}`}>
+            <div className="container mx-auto px-4">
+                <div className="flex justify-between items-center py-4">
+                    <div>
+                        <h1 className="text-2xl font-bold">Your Logo</h1>
+                    </div>
+                    <button onClick={toggleSidebar} className="bg-gray-800 text-white px-2 py-1 rounded">
+                        {sidebarVisible ? <FaTimes style={{ fontSize: '1rem' }} /> : <FaBars style={{ fontSize: '1rem' }} />}
+                    </button>
+                </div>
+                <nav className={`bg-gray-800 text-white w-64 p-4 ${sidebarVisible ? '' : 'hidden'}`}>
+                    <ul className="space-y-4 flex flex-col h-full">
+                        <li>
+                            <Link to="/speech" className={`px-3 py-2 rounded block flex items-center ${isActive('/speech') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                <FaMicrophone className="mr-2" /> Speech
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/upload" className={`px-3 py-2 rounded block flex items-center ${isActive('/upload') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                <FaUpload className="mr-2" /> Upload
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/chatbot" className={`px-3 py-2 rounded block flex items-center ${isActive('/chatbot') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                <FaRobot className="mr-2" /> Chatbot
+                            </Link>
+                        </li>
+                        {authUser ? (
+                            <>
+                                <li>
+                                    <Link to="/home" className={`px-3 py-2 rounded block flex items-center ${isActive('/home') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                        <FaVideo className="mr-2" /> VideoConference
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/dashboard" className={`px-3 py-2 rounded block flex items-center ${isActive('/dashboard') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                        <FaChartLine className="mr-2" /> Dashboard
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="/signup" className={`px-3 py-2 rounded block flex items-center ${isActive('/signup') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                        <FaUserPlus className="mr-2" /> Signup
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/login" className={`px-3 py-2 rounded block flex items-center ${isActive('/login') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                        <FaSignInAlt className="mr-2" /> Login
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                        <li>
+                            <button onClick={handleLogout} className="bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded block flex items-center">
+                                <FaSignOutAlt className="mr-2 " /> Logout
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-        </div>
+        </header>
     );
 };
 
 export default Navbar;
+
+
+
+
 
 
 

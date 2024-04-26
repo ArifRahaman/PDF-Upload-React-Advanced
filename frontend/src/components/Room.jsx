@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 const Room = () => {
     const { roomId } = useParams();
     const [hasJoinedRoom, setHasJoinedRoom] = useState(false);
     const elementRef = useRef(null); // Using useRef to access DOM element
-
+  
     useEffect(() => {
         if (!hasJoinedRoom) {
             const myMeeting = async () => {
@@ -48,12 +48,15 @@ const Room = () => {
             }
         }
 
-    }, [roomId, hasJoinedRoom]); // Re-run effect when roomId or hasJoinedRoom changes
-
+    }, []); // Re-run effect when roomId or hasJoinedRoom changes
+   
     return (
         <div className="room-page">
+            
+            <Link to="/dashboard" className="m-4">Return to the Dashboard </Link>
             <header>
                 <h1>Welcome to Room {roomId}</h1>
+             
             </header>
             <div className="video-container" ref={elementRef}></div>
             <style jsx>{`

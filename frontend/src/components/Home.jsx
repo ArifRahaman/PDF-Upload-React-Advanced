@@ -90,7 +90,7 @@ const Home = () => {
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-lg">
-                <h2 className="text-lg font-bold mb-4">Enter the room number</h2>
+                <h2 className="text-lg font-bold mb-4"> Room number</h2>
                 <form onSubmit={handleFormSubmit}>
                     <input
                         type="text"
