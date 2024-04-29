@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
+const Pdf=require("./pdfDetails");
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const userController = require("./Controllers/authUser");
 // Load environment variables
@@ -197,6 +198,33 @@ app.delete('/delete-file/:id', async (req, res) => {
     res.json({ status: 'ok', message: 'PDF deleted successfully' });
   } catch (error) {
     res.status(500).json({ status: 'error', message: error.message });
+  }
+});
+// 
+// const userCollectionName = "users";
+app.get("/api/users/count", async (req, res) => {
+  try {
+    // Count documents using the User model
+    const totalUsers = await User.countDocuments();
+
+    // Send the total count as JSON response
+    res.json({ total: totalUsers });
+  } catch (error) {
+    console.error("Error fetching user count:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/api/users/pdf", async (req, res) => {
+  try {
+    // Count documents using the User model
+    const totalUsers = await Pdf.countDocuments();
+
+    // Send the total count as JSON response
+    res.json({ total: totalUsers });
+  } catch (error) {
+    console.error("Error fetching user count:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

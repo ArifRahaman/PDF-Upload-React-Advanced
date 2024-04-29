@@ -61,7 +61,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../Context/AuthContext';
 import Cookies from 'js-cookie';
-import { FaBars, FaTimes, FaSignOutAlt, FaMicrophone, FaUpload, FaRobot, FaVideo, FaChartLine, FaUserPlus, FaSignInAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSignOutAlt, FaMicrophone, FaUpload, FaRobot, FaVideo, FaChartLine, FaUserPlus, FaSignInAlt, FaQuestion } from 'react-icons/fa';
 
 const Navbar = () => {
     const { authUser, setAuthUser } = useAuthContext();
@@ -95,7 +95,9 @@ const Navbar = () => {
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center py-4">
                     <div>
-                        <h1 className="text-2xl font-bold">Your Logo</h1>
+                        <h1 className="text-2xl font-bold">
+                            <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 w-32" alt="Flowbite Logo" />
+                        </h1>
                     </div>
                     <button onClick={toggleSidebar} className="bg-gray-800 text-white px-2 py-1 rounded">
                         {sidebarVisible ? <FaTimes style={{ fontSize: '1rem' }} /> : <FaBars style={{ fontSize: '1rem' }} />}
@@ -103,6 +105,11 @@ const Navbar = () => {
                 </div>
                 <nav className={`bg-gray-800 text-white w-64 p-4 ${sidebarVisible ? '' : 'hidden'}`}>
                     <ul className="space-y-4 flex flex-col h-full">
+                        <li>
+                            <Link to="/about" className={`px-3 py-2 rounded block flex items-center ${isActive('/about') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                <FaQuestion className="mr-2" />About Us
+                            </Link>
+                        </li>
                         <li>
                             <Link to="/speech" className={`px-3 py-2 rounded block flex items-center ${isActive('/speech') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
                                 <FaMicrophone className="mr-2" /> Speech
@@ -158,9 +165,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-
 
 
 

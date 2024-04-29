@@ -98,7 +98,7 @@ function TextToSpeech() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-green-400">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-300 to-green-900">
             <textarea
                 value={text}
                 onChange={handleInputChange}

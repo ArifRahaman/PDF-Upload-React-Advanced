@@ -8,6 +8,8 @@ const PdfDetailsSchema = new mongoose.Schema(
   { collection: "PdfDetails" }
 );
 
-mongoose.model("PdfDetails", PdfDetailsSchema);
+// mongoose.model("PdfDetails", PdfDetailsSchema);
+module.exports = mongoose.model("PdfDetails", PdfDetailsSchema);
 
+// module.exports = mongoose.model("User", userSchema);
 

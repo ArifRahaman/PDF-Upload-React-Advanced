@@ -292,6 +292,7 @@ import NotFound from './components/NotFound';
 import Home from "./components/Home"
 import Room from "./components//Room"
 import Chatbot from "./components/chatbot"
+import FAQ from "./components/FAQ"
 import { useAuthContext } from '../Context/AuthContext';
 
 function App() {
@@ -311,6 +312,7 @@ function App() {
           <Route path="/signup" element={authUser ? <Navigate to="/" /> : <Signup />} />
           <Route path="/login" element={authUser ? <Navigate to="/" /> : <Login />} />
           <Route path="/chatbot" element={<Chatbot/>} />
+          <Route path="/about" element={<FAQ />} />
           <Route path="/room/:roomId" element={<Room />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
