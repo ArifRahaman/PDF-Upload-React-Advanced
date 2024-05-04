@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSpeechSynthesis, useSpeechRecognition } from 'react-speech-kit';
 import { FaMicrophone, FaStop, FaVolumeUp, FaVolumeMute, FaPlay } from 'react-icons/fa';
-
+import Footer  from "../components/Footer";
 function TextToSpeech() {
     const authUser = JSON.parse(localStorage.getItem("chat-user"));
 
@@ -25,6 +25,9 @@ function TextToSpeech() {
             voices = window.speechSynthesis.getVoices();
 
             if (voices.length) {
+                // Filter out Bengali voices
+                voices = voices.filter(voice => !voice.lang.includes("bn"));
+
                 setSupportedVoices(voices);
                 clearInterval(timer);
             }
@@ -96,9 +99,50 @@ function TextToSpeech() {
             mediaRecorder.current.stop();
         }
     }
+    const [formData, setFormData] = useState({
+        body: '',
+        email: '',
+        text: ''
+    });
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const templateParams = {
+            email: formData.email,
+            body: formData.body,
+            text: formData.text
+        };
+
+
+        // Send email using EmailJS
+        (emailjs.sendForm('service_p8cvxoc', 'template_1ndm55o', e.target, 'zhtZB-hASpip3O568')
+            .then((result) => {
+                console.log(result.text);
+                // You can handle success message or redirect here
+            }, (error) => {
+                console.log(error);
+                // You can handle error message here
+            }));
+
+
+        // Reset form data after submission
+        setFormData({
+            body: '',
+            email: '',
+            text: ''
+        });
+    };
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-300 to-green-900">
+        <>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-300 to-green-900">
             <textarea
                 value={text}
                 onChange={handleInputChange}
@@ -148,6 +192,10 @@ function TextToSpeech() {
             </div>
             <p><strong>Name:</strong> {authUser ? authUser.username : "Unknown User"}</p>
         </div>
+
+       
+            <Footer />
+        </>
     );
 }
 

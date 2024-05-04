@@ -282,6 +282,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from "react-hot-toast"
 import Navbar from './components/Navbar';
 import Uploadpdf from "./components/Upload";
 import Speech from "./components/SpeechtoTextviceVersaandMore";
@@ -319,6 +320,10 @@ function App() {
       </div>
 
       <ToastContainer />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
     </div>
   );
 }

@@ -111,6 +111,7 @@ app.post(
 //   res.send(req.rootUser);
 // });
 // Multer configuration
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./files");

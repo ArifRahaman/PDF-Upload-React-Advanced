@@ -61,7 +61,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthContext } from '../../Context/AuthContext';
 import Cookies from 'js-cookie';
-import { FaBars, FaTimes, FaSignOutAlt, FaMicrophone, FaUpload, FaRobot, FaVideo, FaChartLine, FaUserPlus, FaSignInAlt, FaQuestion } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSignOutAlt, FaMicrophone, FaUpload, FaRobot, FaVideo, FaUserCircle, FaUserPlus, FaSignInAlt, FaQuestion } from 'react-icons/fa';
 
 const Navbar = () => {
     const { authUser, setAuthUser } = useAuthContext();
@@ -91,7 +91,7 @@ const Navbar = () => {
     const isRoom = location.pathname.startsWith('/room/');
 
     return (
-        <header className={`bg-gray-800 text-white ${isVideoConference || isRoom ? 'hidden' : ''}`}>
+        <header className={`bg-black text-white ${isVideoConference || isRoom ? 'hidden' : ''}`}>
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center py-4">
                     <div>
@@ -103,7 +103,7 @@ const Navbar = () => {
                         {sidebarVisible ? <FaTimes style={{ fontSize: '1rem' }} /> : <FaBars style={{ fontSize: '1rem' }} />}
                     </button>
                 </div>
-                <nav className={`bg-gray-800 text-white w-64 p-4 ${sidebarVisible ? '' : 'hidden'}`}>
+                <nav className={`bg-gradient-to-br from-red-400 to-gray-500 text-white w-64 p-4 ${sidebarVisible ? '' : 'hidden'}`}>
                     <ul className="space-y-4 flex flex-col h-full">
                         <li>
                             <Link to="/about" className={`px-3 py-2 rounded block flex items-center ${isActive('/about') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
@@ -134,7 +134,7 @@ const Navbar = () => {
                                 </li>
                                 <li>
                                     <Link to="/dashboard" className={`px-3 py-2 rounded block flex items-center ${isActive('/dashboard') ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
-                                        <FaChartLine className="mr-2" /> Dashboard
+                                        <FaUserCircle className="mr-2" /> Dashboard
                                     </Link>
                                 </li>
                             </>

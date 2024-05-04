@@ -1,70 +1,6 @@
-// import React, { useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useState } from "react";
-
-// const Home = () => {
-//     const [roomCode, setRoomCode] = useState("");
-//     const navigate = useNavigate();
-
-//     const callHomepage = async () => {
-//         try {
-//             const res = await fetch("http://localhost:8000/home", {
-//                 method: "GET",
-//                 headers: {
-//                     Accept: "application/json",
-//                     "Content-Type": "application/json",
-//                 },
-//                 credentials: "include",
-//             });
-//             const data = await res.json();
-//             console.log(data);
-
-//             if (res.status !== 200) {
-//                 throw new Error(res.statusText);
-//             }
-//         } catch (err) {
-//             console.error("Error:", err.message);
-//             navigate("/login");
-//         }
-//     };
-
-//     const handleFormSubmit = (event) => {
-//         event.preventDefault();
-//         navigate(`/room/${roomCode}`);
-//     };
-
-//     useEffect(() => {
-//         callHomepage();
-//     }, []);
-
-//     return (
-//         <div className="flex justify-center items-center h-screen bg-gray-100">
-//             <div className="bg-white p-8 rounded shadow-lg">
-//                 <h2 className="text-lg font-bold mb-4">Enter the room number</h2>
-//                 <form onSubmit={handleFormSubmit}>
-//                     <input
-//                         type="text"
-//                         value={roomCode}
-//                         onChange={(e) => setRoomCode(e.target.value)}
-//                         placeholder="Room Code"
-//                         className="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-blue-500"
-//                     />
-//                     <button
-//                         type="submit"
-//                         className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
-//                     >
-//                         Enter
-//                     </button>
-//                 </form>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Home;
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaWhatsapp, FaFacebook, FaDiscord, FaEnvelope } from 'react-icons/fa';
 
 const Home = () => {
     const [roomCode, setRoomCode] = useState(generateRoomCode());
@@ -87,30 +23,73 @@ const Home = () => {
         navigate(`/room/${roomCode}`);
     };
 
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(`http://localhost:5173/room/${roomCode}`);
+    };
+
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-lg">
-                <h2 className="text-lg font-bold mb-4"> Room number</h2>
-                <form onSubmit={handleFormSubmit}>
+                <h2 className="text-lg font-bold mb-4">Room number</h2>
+                <div className="flex mb-4">
                     <input
                         type="text"
                         value={roomCode}
-                        readOnly // Make the input read-only since it's generated
+                        readOnly
                         placeholder="Room Code"
-                        className="w-full px-4 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded mr-2 focus:outline-none focus:border-blue-500"
+                        onClick={copyToClipboard} // Trigger copy function on click
                     />
                     <button
+                        type="button"
+                        onClick={copyToClipboard}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                    >
+                        Copy
+                    </button>
+                </div>
+                <form onSubmit={handleFormSubmit}>
+                    <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 mb-4"
                     >
                         Enter
                     </button>
                 </form>
+                <div className="flex items-center">
+                    <span className="text-gray-600 mr-2">Share via:</span>
+                    <FaWhatsapp
+                        className="text-green-500 cursor-pointer mr-2"
+                        onClick={() => {
+                            window.open(`https://wa.me/?text=Join%20the%20room%20using%20this%20link:%20http://localhost:5173/room/${roomCode}`);
+                        }}
+                        style={{ fontSize: "24px" }} // Set icon size
+                    />
+                    <FaFacebook
+                        className="text-blue-500 cursor-pointer mr-2"
+                        onClick={() => {
+                            window.open(`https://www.facebook.com/sharer/sharer.php?u=http://localhost:5173/room/${roomCode}`);
+                        }}
+                        style={{ fontSize: "24px" }} // Set icon size
+                    />
+                    <FaDiscord
+                        className="text-purple-500 cursor-pointer mr-2"
+                        onClick={() => {
+                            window.open(`https://discord.com/channels/CHANNEL_ID`);
+                        }}
+                        style={{ fontSize: "24px" }} // Set icon size
+                    />
+                    <FaEnvelope
+                        className="text-red-500 cursor-pointer"
+                        onClick={() => {
+                            window.open(`mailto:?subject=Join%20the%20room&body=Join%20the%20room%20using%20this%20link:%20http://localhost:5173/room/${roomCode}`);
+                        }}
+                        style={{ fontSize: "24px" }} // Set icon size
+                    />
+                </div>
             </div>
         </div>
     );
 };
 
 export default Home;
-
-
